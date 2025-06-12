@@ -1,6 +1,8 @@
 // src/SignUpPage.tsx
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
-import { supabase } from '../supabaseClient'
+import { useState, ChangeEvent, FormEvent } from 'react'
+import { auth, firestore } from '../firebaseConfig.ts'; // Added .ts extension
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 
 interface FormData {
   name: string
@@ -21,6 +23,7 @@ export default function SignUpPage() {
     email: '',
     password: '',
   })
+
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message | null>(null)
 
@@ -33,9 +36,8 @@ export default function SignUpPage() {
     setLoading(true)
     setMessage(null)
 
-    const strongPasswordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]:;"'<>,.?/~`|\\]).{6,}$/
-
+    // Validate password
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]:;"'<>,.?/~`|\\]).{8,}$/
     if (!strongPasswordRegex.test(form.password)) {
       setMessage({
         type: 'error',
@@ -45,48 +47,36 @@ export default function SignUpPage() {
       return
     }
 
-    // Sign up user
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-    })
-
-    if (signUpError) {
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.email)) {
       setMessage({
         type: 'error',
-        text: signUpError.message,
+        text: 'Please enter a valid email address.',
       })
       setLoading(false)
       return
     }
 
-    // Wait for session or confirmation
-    const { data: sessionData } = await supabase.auth.getSession()
-    const userId = sessionData.session?.user?.id || signUpData.user?.id
+    try {
+      // Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password)
+      const user = userCredential.user
 
-    if (!userId) {
-      setMessage({
-        type: 'success',
-        text: 'Account created! Please check your email to confirm your account before continuing.',
-      })
-      setLoading(false)
-      return
-    }
-
-    // Insert profile into database
-    const { error: insertError } = await supabase.from('profiles').insert([
-      {
-        id: userId,
+      // Save user info to Firestore
+      await setDoc(doc(firestore, 'users', user.uid), {
         name: form.name,
         age: parseInt(form.age),
-      },
-    ])
+        email: form.email,
+      })
 
-    if (insertError) {
-      setMessage({ type: 'error', text: insertError.message })
-    } else {
       setMessage({ type: 'success', text: 'Account created successfully!' })
       setForm({ name: '', age: '', email: '', password: '' })
+    } catch (error: any) {
+      setMessage({
+        type: 'error',
+        text: error.message || 'Something went wrong.',
+      })
     }
 
     setLoading(false)
