@@ -72,14 +72,16 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Stripe-style Animated Gradient Background */}
-        <div className="absolute inset-0 z-0 animate-stripe-gradient bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-400 via-pink-400 to-yellow-300 blur-2xl opacity-40 mix-blend-multiply"></div>
-        <div className="absolute inset-0 z-0 animate-stripe-gradient-2 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-300 via-indigo-400 to-fuchsia-500 blur-2xl opacity-30 mix-blend-multiply"></div>
+    <div className="min-h-screen relative">
+      {/* Simple Solid Blue Background */}
+      <div className="fixed inset-0 bg-blue-100">
+        {/* Subtle overlay for depth */}
+        <div className="absolute inset-0 bg-blue-50/50"></div>
+      </div>
 
-        <div className="relative z-10 container-custom text-center">
+      {/* Hero Section - Reduced height */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20 pb-12">
+        <div className="relative z-10 container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,7 +89,7 @@ const HomePage: React.FC = () => {
             className="max-w-5xl mx-auto"
           >
             <motion.h1 
-              className="text-5xl md:text-7xl font-bold text-slate-900 mb-8 leading-tight"
+              className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-tight"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -99,7 +101,7 @@ const HomePage: React.FC = () => {
             </motion.h1>
 
             <motion.p 
-              className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-slate-700 mb-10 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -123,7 +125,7 @@ const HomePage: React.FC = () => {
 
               <Link 
                 to="/join-network"
-                className="inline-flex items-center px-8 py-4 border-2 border-slate-200 text-slate-700 rounded-xl font-medium hover:border-slate-300 hover:bg-slate-50 transition-all duration-300"
+                className="inline-flex items-center px-8 py-4 border-2 border-slate-700 text-slate-700 rounded-xl font-medium hover:border-slate-800 hover:bg-slate-700 hover:text-white transition-all duration-300"
               >
                 Join the Network
               </Link>
@@ -133,14 +135,14 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-24 bg-white">
-        <div className="container-custom">
+      <section className="py-16 relative z-10">
+        <div className="container mx-auto px-6">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-100px" }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <motion.h2 
               variants={itemVariants}
@@ -150,7 +152,7 @@ const HomePage: React.FC = () => {
             </motion.h2>
             <motion.p 
               variants={itemVariants}
-              className="text-xl text-slate-600 max-w-3xl mx-auto"
+              className="text-xl text-slate-700 max-w-3xl mx-auto"
             >
               Despite representing half the population, women face systematic gaps in medical research, diagnosis, and treatment.
             </motion.p>
@@ -169,7 +171,7 @@ const HomePage: React.FC = () => {
                 variants={itemVariants}
                 className="group relative"
               >
-                <div className="relative p-8 bg-white rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-900/5">
+                <div className="relative p-8 bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-900/5">
                   <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.color} mb-6`}>
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
@@ -183,14 +185,14 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* What We Do Section */}
-      <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
-        <div className="container-custom">
+      <section className="py-16 relative z-10">
+        <div className="container mx-auto px-6">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-100px" }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <motion.h2 
               variants={itemVariants}
@@ -200,7 +202,7 @@ const HomePage: React.FC = () => {
             </motion.h2>
             <motion.p 
               variants={itemVariants}
-              className="text-xl text-slate-600 max-w-3xl mx-auto"
+              className="text-xl text-slate-700 max-w-3xl mx-auto"
             >
               Our integrated approach combines cutting-edge research, strategic advocacy, and accessible education to transform women's healthcare.
             </motion.p>
@@ -219,7 +221,7 @@ const HomePage: React.FC = () => {
                 variants={itemVariants}
                 className="group relative"
               >
-                <div className={`relative p-8 bg-gradient-to-br ${service.gradient} rounded-2xl border border-white/50 hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-500 hover:-translate-y-1`}>
+                <div className={`relative p-8 bg-gradient-to-br ${service.gradient} backdrop-blur-sm rounded-2xl border border-white/50 hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-500 hover:-translate-y-1`}>
                   <div className="flex items-center mb-6">
                     <div className={`p-3 rounded-xl bg-white shadow-sm ${service.iconColor}`}>
                       <service.icon className="w-6 h-6" />
@@ -235,14 +237,8 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Enhanced Impact Visual Section */}
-      <section className="py-32 bg-slate-900 text-white relative overflow-hidden">
-        {/* Enhanced Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl"></div>
-        
-        <div className="relative z-10 container-custom">
+      <section className="py-20 relative overflow-hidden">
+        <div className="relative z-10 container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -250,13 +246,13 @@ const HomePage: React.FC = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: false }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight text-slate-900">
                 Bridging the Gap Between 
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent block mt-2">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent block mt-2">
                   Science and Impact
                 </span>
               </h2>
-              <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+              <p className="text-xl text-slate-700 mb-8 leading-relaxed">
                 For too long, women's health has been an afterthought in medical research and policy. 
                 We're changing that by connecting researchers, innovators, and advocates to create 
                 evidence-based solutions that work for everyone.
@@ -270,7 +266,7 @@ const HomePage: React.FC = () => {
                   viewport={{ once: false }}
                 >
                   <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full"></div>
-                  <span className="text-slate-300">Evidence-Based Research</span>
+                  <span className="text-slate-700">Evidence-Based Research</span>
                 </motion.div>
                 <motion.div 
                   className="flex items-center gap-3"
@@ -280,7 +276,7 @@ const HomePage: React.FC = () => {
                   viewport={{ once: false }}
                 >
                   <div className="w-3 h-3 bg-gradient-to-r from-purple-400 to-purple-500 rounded-full"></div>
-                  <span className="text-slate-300">Policy Innovation</span>
+                  <span className="text-slate-700">Policy Innovation</span>
                 </motion.div>
                 <motion.div 
                   className="flex items-center gap-3"
@@ -290,7 +286,7 @@ const HomePage: React.FC = () => {
                   viewport={{ once: false }}
                 >
                   <div className="w-3 h-3 bg-gradient-to-r from-indigo-400 to-indigo-500 rounded-full"></div>
-                  <span className="text-slate-300">Global Collaboration</span>
+                  <span className="text-slate-700">Global Collaboration</span>
                 </motion.div>
               </div>
             </motion.div>
@@ -486,47 +482,15 @@ const HomePage: React.FC = () => {
                     }}
                   />
                 </svg>
-
-                
-                
-                {/* Floating Labels */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 3.6 }}
-                  viewport={{ once: false }}
-                >
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 3.8 }}
-                  viewport={{ once: false }}
-                >
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 4.0 }}
-                  viewport={{ once: false }}
-                >
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 4.2 }}
-                  viewport={{ once: false }}
-                >
-                </motion.div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 bg-white">
-        <div className="container-custom">
+      {/* Final CTA - Reduced padding */}
+      <section className="py-8 pb-16 relative z-10">
+        <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -538,7 +502,7 @@ const HomePage: React.FC = () => {
               Join the Movement for 
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Equitable Healthcare</span>
             </h2>
-            <p className="text-xl text-slate-600 mb-12 leading-relaxed">
+            <p className="text-xl text-slate-700 mb-12 leading-relaxed">
               Whether you're a researcher, innovator, or advocate, your expertise can help us build a future where women's health is prioritized, understood, and properly addressed.
             </p>
             

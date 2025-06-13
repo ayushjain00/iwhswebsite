@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { DivideIcon as LucideIcon } from 'lucide-react';
 
 interface FeatureCardProps {
-  icon: LucideIcon;
+  icon: typeof LucideIcon;
   title: string;
   description: string;
   delay?: number;

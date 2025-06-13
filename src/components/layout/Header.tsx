@@ -19,7 +19,9 @@ const Header: React.FC = () => {
   };
 
   const handleDropdownLeave = () => {
-    setActiveDropdown(null);
+    // Add a delay before closing the dropdown
+    // This gives the user time to move the mouse to the dropdown content
+    setTimeout(() => setActiveDropdown(null), 100); // 100ms delay
   };
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-12">
             {navItems.map((item) => (
               <div 
                 key={item.label} 
